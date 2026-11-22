@@ -50,20 +50,5 @@ return {
         lazygit = {
             enabled = true,
         },
-        styles = {
-            terminal = {
-                keys = {
-                    term_normal = {
-                        "<Esc>",
-                        function()
-                            return "<C-\\><C-n>"
-                        end,
-                        mode = "t",
-                        expr = true,
-                        desc = "Exit Terminal Mode",
-                    },
-                },
-            },
-        },
     },
 }
