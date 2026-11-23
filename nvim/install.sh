@@ -44,7 +44,23 @@ else
     echo "Skipping Neovim installation."
 fi
 
-# 3. Add local bin to PATH
+# 3. Setup Neovim configuration
+echo "Symlinking Neovim configuration..."
+
+NVIM_DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+NVIM_CONFIG_DIR="$HOME/.config/nvim"
+
+mkdir -p "$HOME/.config"
+
+# Back up any existing real directory/file that isn't already a symlink
+if [[ -e "$NVIM_CONFIG_DIR" && ! -L "$NVIM_CONFIG_DIR" ]]; then
+    echo "Backing up existing config to ${NVIM_CONFIG_DIR}.bak..."
+    mv "$NVIM_CONFIG_DIR" "${NVIM_CONFIG_DIR}.bak"
+fi
+
+ln -sfn "$NVIM_DOTFILES_DIR" "$NVIM_CONFIG_DIR"
+
+# 4. Add local bin to PATH
 if ! grep -Fqx 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc"; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
 fi
