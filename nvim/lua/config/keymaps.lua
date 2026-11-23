@@ -53,6 +53,9 @@ map("n", "<leader>ba", function() Snacks.bufdelete.all() end, { desc = "Delete A
 map("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete All Other Buffers", })
 map("n", "<leader>bl", "<cmd>buffers<CR>", { desc = "List Buffers", })
 
+-- Select All in Buffer
+map("n", "<C-a>", "ggVG", { desc = "Select all" })
+
 -- Tabs
 map("n", "<leader><Tab>n", "<cmd>tabnew<CR>", { desc = "New Tab", })
 map("n", "<leader><Tab>c", "<cmd>tabclose<CR>", { desc = "Close Tab", })
