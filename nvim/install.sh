@@ -64,5 +64,3 @@ ln -sfn "$NVIM_DOTFILES_DIR" "$NVIM_CONFIG_DIR"
 if ! grep -Fqx 'export PATH="$HOME/.local/bin:$PATH"' "$HOME/.bashrc"; then
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$HOME/.bashrc"
 fi
-
-export PATH="$HOME/.local/bin:$PATH"

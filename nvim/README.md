@@ -1,5 +1,14 @@
 # Neovim Setup
 
+## Quick setup
+
+```bash
+cd dotfiles/nvim
+
+./install.sh
+source ~/.bashrc
+```
+
 ## 1. Install system dependencies
 ```bash
 sudo apt update
