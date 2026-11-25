@@ -45,13 +45,38 @@ map("n", "<leader>wo", "<cmd>only<CR>", { desc = "Close Other Windows", })
 map("n", "<leader>ww", "<C-w>w", { desc = "Cycle Windows", })
 map("n", "<leader>wr", "<C-w>r", { desc = "Rotate Windows", })
 
--- Buffers
-map("n", "<leader>bn", "<cmd>bnext<CR>", { desc = "Next Buffer", })
-map("n", "<leader>bp", "<cmd>bprevious<CR>", { desc = "Previous Buffer", })
-map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer", })
-map("n", "<leader>ba", function() Snacks.bufdelete.all() end, { desc = "Delete All Buffers", })
-map("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete All Other Buffers", })
-map("n", "<leader>bl", "<cmd>buffers<CR>", { desc = "List Buffers", })
+-- Buffer Management (<leader>b)
+map("n", "<leader>bn", "<cmd>enew<CR>", { desc = "New Empty Buffer" })
+map("n", "<leader>bw", function() Snacks.bufdelete() end, { desc = "Close Buffer" })
+map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
+map("n", "<leader>ba", function() Snacks.bufdelete.all() end, { desc = "Delete All Buffers" })
+map("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete All Other Buffers" })
+map("n", "<leader>bl", function() Snacks.picker.buffers() end, { desc = "List Buffers" })
+
+-- Reopen Last Closed Buffer (Ctrl+Shift+T + <leader>bu backup)
+local function reopen_closed_buffer()
+    local last_file = table.remove(_G.closed_buffers or {})
+    if last_file then
+        vim.cmd("edit " .. vim.fn.fnameescape(last_file))
+    else
+        vim.notify("No recently closed tabs", vim.log.levels.INFO)
+    end
+end
+
+map("n", "<C-S-t>", reopen_closed_buffer, { desc = "Reopen Closed Buffer" })
+map("n", "<leader>bu", reopen_closed_buffer, { desc = "Undo Close Buffer" })
+
+-- Bufferline Navigation (Shift+H / Shift+L & Alt+1..9)
+map("n", "<S-l>", "<cmd>BufferLineCycleNext<CR>", { desc = "Move Right on Buffer line" })
+map("n", "<S-h>", "<cmd>BufferLineCyclePrev<CR>", { desc = "Move Left on Buffer line" })
+
+for i = 1, 9 do
+    map("n", "<A-" .. i .. ">", "<cmd>BufferLineGoToBuffer " .. i .. "<CR>", { desc = "Go to Tab " .. i })
+end
+
+-- Reorder "Tabs" in Bufferline
+map("n", "<C-S-h>", "<cmd>BufferLineMovePrev<CR>", { desc = "Move Tab Left" })
+map("n", "<C-S-l>", "<cmd>BufferLineMoveNext<CR>", { desc = "Move Tab Right" })
 
 -- Select All in Buffer
 map("n", "<C-a>", "ggVG", { desc = "Select all" })
