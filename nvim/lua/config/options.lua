@@ -40,3 +40,6 @@ opt.switchbuf = "usetab,newtab"
 opt.undofile = true         -- Save undo history to a file
 opt.swapfile = false        -- Disable swap file creation
 opt.backup = false          -- Disable backup file creation
+
+-- Sessions
+opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
