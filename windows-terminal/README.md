@@ -1,5 +1,13 @@
 # Windows Terminal Setup
 
+## Quick setup
+
+```powershell
+cd dotfiles/nvim
+
+.\setup.ps1
+```
+
 ## 1. Install Nerd Font
 
 Download and install **JetBrainsMono Nerd Font** so icons and glyphs render properly:
@@ -11,11 +19,15 @@ Download and install **JetBrainsMono Nerd Font** so icons and glyphs render prop
 Clone this repository, remove the default `settings.json` (if present), and create a symlink in PowerShell *(requires Developer Mode enabled or an Administrator terminal)*:
 
 ```powershell
-git clone <repo-url> "\\$HOME\\dotfiles"
+git clone <repo-url> "$HOME\Downloads\dotfiles"
 
-wtPath = "env:LOCALAPPDATA\\Packages\\Microsoft.WindowsTerminal\_8wekyb3d8bbwe\\LocalState\\settings.json"
+$wtDir = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState"
+$wtPath = Join-Path $wtDir "settings.json"
 
-Remove-Item \\$wtPath -Force -ErrorAction SilentlyContinue
+# Absolute path to settings.json alongside this script
+$target = Join-Path $PSScriptRoot "settings.json"
 
-New-Item -ItemType SymbolicLink -Path wtPath -Target "HOME\\dotfiles\\windows-terminal\\settings.json"
+New-Item -ItemType Directory -Path $wtDir -Force | Out-Null
+Remove-Item -Path $wtPath -Force -ErrorAction SilentlyContinue
+New-Item -ItemType SymbolicLink -Path $wtPath -Target $target
 ```
